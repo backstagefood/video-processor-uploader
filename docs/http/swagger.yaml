@@ -1,0 +1,107 @@
+basePath: /
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+  description: API to upload video.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Video Processor Uploader
+  version: "1.0"
+paths:
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Check the application health
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: health response
+          schema:
+            properties:
+              status:
+                type: string
+            type: object
+        "404":
+          description: not found error response
+          schema:
+            properties:
+              error:
+                type: string
+            type: object
+        "500":
+          description: generic error response
+          schema:
+            properties:
+              error:
+                type: string
+            type: object
+      summary: Application health
+      tags:
+      - health
+  /info:
+    get:
+      consumes:
+      - application/json
+      description: Check the application info(name and version)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: info response
+          schema:
+            properties:
+              name:
+                type: string
+              version:
+                type: string
+            type: object
+        "500":
+          description: generic error response
+          schema:
+            properties:
+              error:
+                type: string
+            type: object
+      summary: Application info
+      tags:
+      - info
+  /upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 'Upload video file in the following formats: mp4, avi, mov, mkv'
+      parameters:
+      - description: Video file to upload
+        in: formData
+        name: video
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success response
+          schema:
+            properties:
+              ' message':
+                type: string
+              success:
+                type: boolean
+            type: object
+        "500":
+          description: generic error response
+          schema:
+            properties:
+              error:
+                type: string
+            type: object
+      summary: Upload video file
+      tags:
+      - upload
+swagger: "2.0"
