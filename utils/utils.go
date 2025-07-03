@@ -2,10 +2,13 @@ package utils
 
 import (
 	"io"
+	"math/rand"
 	"mime/multipart"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
+	"time"
 	"unicode"
 )
 
@@ -68,4 +71,11 @@ func GetFileSize(file multipart.File) (int64, error) {
 	}
 
 	return size, nil
+}
+
+func GenerateUniqueKey() string {
+	rand.Seed(time.Now().UnixNano()) // Garante semente única por execução
+	timestamp := time.Now().Format("20060102_150405.000000000")
+	randomPart := strconv.Itoa(rand.Intn(10000)) // Número aleatório de 0 a 9999
+	return timestamp + "_" + randomPart
 }

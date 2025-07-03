@@ -12,7 +12,6 @@ import (
 	"log/slog"
 	"mime/multipart"
 	"path/filepath"
-	"time"
 )
 
 type fileService struct {
@@ -35,8 +34,9 @@ func (f *fileService) CreateFile(ctx context.Context, userEmail string, fileName
 	path := filepath.Join(utils.SanitizeEmailForPath(userEmail), "video_files")
 
 	// grava no bucket
-	timestamp := time.Now().Format("20060102_150405")
-	fileNameWithTimestamp := fmt.Sprintf("%s_%s", timestamp, fileName)
+	//timestamp := time.Now().Format("20060102_150405")
+	filePrefix := utils.GenerateUniqueKey()
+	fileNameWithTimestamp := fmt.Sprintf("%s_%s", filePrefix, fileName)
 	fileFullPath, err := f.bucketRepository.CreateFile(ctx, path, fileNameWithTimestamp, file)
 	if err != nil {
 		slog.Error("não foi possível gravar o video no bucket", "error", err)
