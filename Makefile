@@ -25,9 +25,9 @@ swagger:
 	@swag init -g cmd/app/main.go -o docs/http
 
 docker-build:
-	@docker build --no-cache --build-arg VERSION=$(VERSION) --build-arg PROJECT_NAME=$(PROJECT_NAME) -t $(PROJECT_NAME):$(VERSION) .
+	@docker build --network=host --build-arg VERSION=$(VERSION) --build-arg PROJECT_NAME=$(PROJECT_NAME) -t $(PROJECT_NAME):$(VERSION) .
 
 podman-build:
-	@podman build --build-arg VERSION=$(VERSION) --build-arg PROJECT_NAME=$(PROJECT_NAME) -t $(PROJECT_NAME):$(VERSION) .
+	@podman build --network=host VERSION=$(VERSION) --build-arg PROJECT_NAME=$(PROJECT_NAME) -t $(PROJECT_NAME):$(VERSION) .
 
 #  docker build --no-cache --build-arg VERSION=0.0.1 --build-arg PROJECT_NAME=video-processor-uploader -t video-processor-uploader:0.0.1 .

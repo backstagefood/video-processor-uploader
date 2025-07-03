@@ -71,7 +71,7 @@ paths:
       summary: Application info
       tags:
       - info
-  /upload:
+  /v1/upload:
     post:
       consumes:
       - multipart/form-data

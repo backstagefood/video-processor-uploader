@@ -115,7 +115,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/upload": {
+        "/v1/upload": {
             "post": {
                 "description": "Upload video file in the following formats: mp4, avi, mov, mkv",
                 "consumes": [
