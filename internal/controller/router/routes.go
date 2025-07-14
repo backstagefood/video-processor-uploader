@@ -2,14 +2,16 @@ package routes
 
 import (
 	"fmt"
+	"net/http"
+
 	docs "github.com/backstagefood/video-processor-uploader/docs/http"
 	"github.com/backstagefood/video-processor-uploader/internal/controller/handlers"
 	"github.com/backstagefood/video-processor-uploader/pkg/adapter"
 	"github.com/backstagefood/video-processor-uploader/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"net/http"
 )
 
 func NewRouter(connectionManager adapter.ConnectionManager) *gin.Engine {
@@ -45,6 +47,10 @@ func NewRouter(connectionManager adapter.ConnectionManager) *gin.Engine {
 	r.GET("/info", handlers.HandleInfo)
 	r.GET("/health", handlers.HandleHealth)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+
+	r.GET("/metrics", func(c *gin.Context) {
+		promhttp.Handler().ServeHTTP(c.Writer, c.Request)
+	})
 
 	// logger
 	r.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
